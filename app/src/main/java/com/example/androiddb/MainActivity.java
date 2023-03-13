@@ -5,8 +5,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -17,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     Button btn_add,btn_view;
     EditText name,age;
     Switch isActive;
-    RecyclerView list;
+    ListView list;
     Model model;
 
     @Override
@@ -30,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         name=(EditText) findViewById(R.id.name);
         age=(EditText) findViewById(R.id.age);
         isActive=findViewById(R.id.switch1);
-        list=findViewById(R.id.customer_list);
+        list=findViewById(R.id.list_view);
 
 
 
@@ -39,7 +42,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 DbHelper dbHelper=new DbHelper(MainActivity.this);
                 List<Model> everyone=dbHelper.getEveryone();
-                Toast.makeText(MainActivity.this, everyone.toString(), Toast.LENGTH_SHORT).show();
+                ArrayAdapter adapter=new ArrayAdapter<Model>(MainActivity.this, android.R.layout.simple_list_item_1,everyone);
+
+                list.setAdapter(adapter);
+
+                //Toast.makeText(MainActivity.this, everyone.toString(), Toast.LENGTH_SHORT).show();
             }
 
         });
